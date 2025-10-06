@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Airport Management System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>✈️ Airport Management System</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="flights.html">Flights</a></li>
+                <li><a href="airports.html">Airports</a></li>
+                <li><a href="bookings.html">My Bookings</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <p>Welcome, <span id="userName"></span> (<span id="userRole"></span>)</p>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3 id="totalFlights">0</h3>
+                    <p>Total Flights</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalAirports">0</h3>
+                    <p>Total Airports</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="myBookings">0</h3>
+                    <p>My Bookings</p>
+                </div>
+            </div>
+
+            <div class="dashboard-quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-buttons">
+                    <a href="flights.html" class="btn btn-primary">Search Flights</a>
+                    <a href="bookings.html" class="btn btn-secondary">View My Bookings</a>
+                    <button id="adminBtn" class="btn btn-success" onclick="showAdminPanel()" style="display: none;">
+                        Admin Panel
+                    </button>
+                    <button id="staffBtn" class="btn btn-info" onclick="showStaffPanel()" style="display: none;">
+                        Staff Panel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Panel -->
+            <div id="adminPanel" class="admin-panel" style="display: none;">
+                <h2>Admin Panel</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="showAdminTab('users')">Users</button>
+                    <button class="tab-btn" onclick="showAdminTab('airports')">Airports</button>
+                    <button class="tab-btn" onclick="showAdminTab('flights')">Flights</button>
+                    <button class="tab-btn" onclick="showAdminTab('bookings')">All Bookings</button>
+                </div>
+
+                <div id="usersTab" class="tab-content">
+                    <h3>User Management</h3>
+                    <div id="usersList" class="data-table"></div>
+                </div>
+
+                <div id="airportsTab" class="tab-content" style="display: none;">
+                    <h3>Airport Management</h3>
+                    <a href="airports.html" class="btn btn-primary">Manage Airports</a>
+                </div>
+
+                <div id="flightsTab" class="tab-content" style="display: none;">
+                    <h3>Flight Management</h3>
+                    <a href="flights.html" class="btn btn-primary">Manage Flights</a>
+                </div>
+
+                <div id="bookingsTab" class="tab-content" style="display: none;">
+                    <h3>All Bookings</h3>
+                    <div id="allBookingsList" class="data-table"></div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2>Recent Bookings</h2>
+                <div id="recentBookings" class="bookings-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Airport Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        requireAuth();
+        const currentUser = getCurrentUser();
+        
+        // Display user info
+        document.getElementById('userName').textContent = currentUser.username;
+        document.getElementById('userRole').textContent = currentUser.role;
+        
+        // Show admin/staff buttons based on role
+        if (currentUser.role === 'ADMIN') {
+            document.getElementById('adminBtn').style.display = 'inline-block';
+        }
+        if (currentUser.role === 'ADMIN' || currentUser.role === 'STAFF') {
+            document.getElementById('staffBtn').style.display = 'inline-block';
+        }
+        
+        // Load dashboard data
+        loadDashboardData();
+        
+        async function loadDashboardData() {
+            try {
+                const [flightsRes, airportsRes, bookingsRes] = await Promise.all([
+                    fetch('/AirportManagementSystem/flight/list'),
+                    fetch('/AirportManagementSystem/airport/list'),
+                    fetch('/AirportManagementSystem/booking/my-bookings')
+                ]);
+                
+                if (flightsRes.ok) {
+                    const data = await flightsRes.json();
+                    if (data.success) {
+                        document.getElementById('totalFlights').textContent = data.data.length;
+                    }
+                }
+                
+                if (airportsRes.ok) {
+                    const data = await airportsRes.json();
+                    if (data.success) {
+                        document.getElementById('totalAirports').textContent = data.data.length;
+                    }
+                }
+                
+                if (bookingsRes.ok) {
+                    const data = await bookingsRes.json();
+                    if (data.success) {
+                        document.getElementById('myBookings').textContent = data.data.length;
+                        displayRecentBookings(data.data.slice(0, 5));
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+        
+        function displayRecentBookings(bookings) {
+            const container = document.getElementById('recentBookings');
+            if (bookings.length === 0) {
+                container.innerHTML = '<p class="no-data">No bookings yet</p>';
+                return;
+            }
+            
+            const html = bookings.map(booking => `
+                <div class="booking-item">
+                    <div>
+                        <strong>${booking.flightNumber}</strong>: 
+                        ${booking.sourceAirportCode} → ${booking.destinationAirportCode}
+                    </div>
+                    <div>
+                        Seats: ${booking.seatsBooked} | 
+                        Total: $${booking.totalPrice} | 
+                        Status: <span class="status-${booking.status.toLowerCase()}">${booking.status}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
+        }
+        
+        function showAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            if (panel.style.display === 'block') {
+                loadAdminData();
+            }
+        }
+        
+        function showStaffPanel() {
+            window.location.href = 'flights.html';
+        }
+        
+        function showAdminTab(tab) {
+            const tabs = ['users', 'airports', 'flights', 'bookings'];
+            tabs.forEach(t => {
+                document.getElementById(t + 'Tab').style.display = t === tab ? 'block' : 'none';
+            });
+            
+            const buttons = document.querySelectorAll('.admin-panel .tab-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.toggle('active', tabs[index] === tab);
+            });
+            
+            if (tab === 'bookings') {
+                loadAllBookings();
+            }
+        }
+        
+        async function loadAdminData() {
+            // Load users would require a new endpoint
+            // For now, just show a placeholder
+            document.getElementById('usersList').innerHTML = '<p>User management coming soon...</p>';
+        }
+        
+        async function loadAllBookings() {
+            try {
+                const response = await fetch('/AirportManagementSystem/booking/list');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const html = result.data.map(booking => `
+                        <div class="booking-item">
+                            <div>User: ${booking.username}</div>
+                            <div>Flight: ${booking.flightNumber} (${booking.sourceAirportCode} → ${booking.destinationAirportCode})</div>
+                            <div>Seats: ${booking.seatsBooked} | Total: $${booking.totalPrice} | Status: ${booking.status}</div>
+                        </div>
+                    `).join('');
+                    document.getElementById('allBookingsList').innerHTML = html || '<p>No bookings found</p>';
+                }
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+            }
+        }
+    </script>
+</body>
+</html>

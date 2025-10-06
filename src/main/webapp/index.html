@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airport Management System - Home</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>✈️ Airport Management System</h1>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="flights.html">Flights</a></li>
+                <li><a href="airports.html">Airports</a></li>
+                <li id="navBookings" style="display: none;"><a href="bookings.html">My Bookings</a></li>
+                <li id="navDashboard" style="display: none;"><a href="dashboard.html">Dashboard</a></li>
+                <li id="navLogin"><a href="login.html">Login</a></li>
+                <li id="navLogout" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Airport Management System</h1>
+                <p>Your comprehensive solution for airport operations, flight management, and bookings</p>
+                <div class="hero-buttons">
+                    <a href="flights.html" class="btn btn-primary">Search Flights</a>
+                    <a href="login.html" class="btn btn-secondary">Get Started</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Our Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🛫</div>
+                        <h3>Flight Management</h3>
+                        <p>Schedule, update, and manage flights with real-time status updates</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏢</div>
+                        <h3>Airport Management</h3>
+                        <p>Comprehensive airport information and management capabilities</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎫</div>
+                        <h3>Easy Booking</h3>
+                        <p>Book flights quickly and manage your bookings effortlessly</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>User Management</h3>
+                        <p>Role-based access control for administrators, staff, and passengers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="statsAirports">0</h3>
+                        <p>Airports</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="statsFlights">0</h3>
+                        <p>Active Flights</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="statsBookings">0</h3>
+                        <p>Bookings Today</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Airport Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Update navigation based on login status
+        updateNavigation();
+        
+        // Load statistics
+        loadStats();
+        
+        async function loadStats() {
+            try {
+                const [airportsRes, flightsRes] = await Promise.all([
+                    fetch('/AirportManagementSystem/airport/list'),
+                    fetch('/AirportManagementSystem/flight/list')
+                ]);
+                
+                if (airportsRes.ok) {
+                    const airportsData = await airportsRes.json();
+                    if (airportsData.success) {
+                        document.getElementById('statsAirports').textContent = airportsData.data.length;
+                    }
+                }
+                
+                if (flightsRes.ok) {
+                    const flightsData = await flightsRes.json();
+                    if (flightsData.success) {
+                        document.getElementById('statsFlights').textContent = flightsData.data.length;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+    </script>
+</body>
+</html>

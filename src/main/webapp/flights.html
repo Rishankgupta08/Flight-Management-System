@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flights - Airport Management System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>✈️ Airport Management System</h1>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="flights.html" class="active">Flights</a></li>
+                <li><a href="airports.html">Airports</a></li>
+                <li id="navBookings" style="display: none;"><a href="bookings.html">My Bookings</a></li>
+                <li id="navDashboard" style="display: none;"><a href="dashboard.html">Dashboard</a></li>
+                <li id="navLogin"><a href="login.html">Login</a></li>
+                <li id="navLogout" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <h1>Flight Search & Management</h1>
+
+            <!-- Search Form -->
+            <div class="card">
+                <h2>Search Flights</h2>
+                <form id="searchForm" class="search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="searchFrom">From (Airport Code)</label>
+                            <input type="text" id="searchFrom" name="from" placeholder="e.g., JFK">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchTo">To (Airport Code)</label>
+                            <input type="text" id="searchTo" name="to" placeholder="e.g., LAX">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchDate">Date</label>
+                            <input type="date" id="searchDate" name="date">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="button" class="btn btn-secondary" onclick="loadAllFlights()">Show All</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Add Flight Button (Admin/Staff only) -->
+            <div id="addFlightSection" style="display: none;">
+                <button class="btn btn-success" onclick="showAddFlightModal()">+ Add New Flight</button>
+            </div>
+
+            <!-- Flights List -->
+            <div id="flightsList" class="flights-list">
+                <p class="loading">Loading flights...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Flight Modal -->
+    <div id="flightModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeFlightModal()">&times;</span>
+            <h2 id="modalTitle">Add New Flight</h2>
+            <form id="flightForm" onsubmit="handleFlightSubmit(event)">
+                <input type="hidden" id="flightId" name="id">
+                <div class="form-group">
+                    <label for="flightNumber">Flight Number</label>
+                    <input type="text" id="flightNumber" name="flightNumber" 
+                           pattern="[A-Z]{2}[0-9]{3,4}" placeholder="e.g., AA101" required>
+                </div>
+                <div class="form-group">
+                    <label for="sourceAirportId">Source Airport</label>
+                    <select id="sourceAirportId" name="sourceAirportId" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="destinationAirportId">Destination Airport</label>
+                    <select id="destinationAirportId" name="destinationAirportId" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="departureTime">Departure Time</label>
+                    <input type="datetime-local" id="departureTime" name="departureTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="arrivalTime">Arrival Time</label>
+                    <input type="datetime-local" id="arrivalTime" name="arrivalTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="seatsAvailable">Seats Available</label>
+                    <input type="number" id="seatsAvailable" name="seatsAvailable" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price ($)</label>
+                    <input type="number" id="price" name="price" min="0" step="0.01" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Save Flight</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeFlightModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBookingModal()">&times;</span>
+            <h2>Book Flight</h2>
+            <div id="bookingFlightInfo"></div>
+            <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                <input type="hidden" id="bookingFlightId" name="flightId">
+                <div class="form-group">
+                    <label for="seatsBooked">Number of Seats</label>
+                    <input type="number" id="seatsBooked" name="seatsBooked" min="1" required>
+                </div>
+                <div id="totalPriceDisplay" class="total-price"></div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeBookingModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Airport Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/flights.js"></script>
+</body>
+</html>

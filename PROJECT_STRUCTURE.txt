@@ -1,0 +1,123 @@
+Airport Management System - Project Structure
+==============================================
+
+Airport-Management-System/
+│
+├── pom.xml                                          # Maven configuration
+├── README.md                                        # Complete documentation
+├── SETUP.md                                         # Quick setup guide
+├── PROJECT_SUMMARY.md                               # Project overview
+├── .gitignore                                       # Git ignore rules
+│
+├── sql/                                             # Database scripts
+│   ├── schema.sql                                  # Database schema (4 tables)
+│   └── sample_data.sql                             # Sample data (15 airports, 20+ flights)
+│
+├── logs/                                            # Application logs directory
+│
+└── src/
+    ├── main/
+    │   ├── java/com/example/airportmanagement/
+    │   │   │
+    │   │   ├── config/                              # Configuration
+    │   │   │   └── AppConfig.java                  # App config loader
+    │   │   │
+    │   │   ├── db/                                  # Database
+    │   │   │   └── DatabaseConnection.java         # Connection pool (max 20)
+    │   │   │
+    │   │   ├── model/                               # POJOs (4 models)
+    │   │   │   ├── User.java                       # User entity (role-based)
+    │   │   │   ├── Airport.java                    # Airport entity
+    │   │   │   ├── Flight.java                     # Flight entity (with status)
+    │   │   │   └── Booking.java                    # Booking entity
+    │   │   │
+    │   │   ├── dao/                                 # Data Access Objects (4 DAOs)
+    │   │   │   ├── UserDAO.java                    # User CRUD operations
+    │   │   │   ├── AirportDAO.java                 # Airport CRUD + search
+    │   │   │   ├── FlightDAO.java                  # Flight CRUD + joins
+    │   │   │   └── BookingDAO.java                 # Booking CRUD + joins
+    │   │   │
+    │   │   ├── service/                             # Business Logic (5 services)
+    │   │   │   ├── UserService.java                # Auth, registration
+    │   │   │   ├── AirportService.java             # Airport management
+    │   │   │   ├── FlightService.java              # Flight scheduling
+    │   │   │   ├── BookingService.java             # Booking creation
+    │   │   │   └── ServiceException.java           # Custom exception
+    │   │   │
+    │   │   ├── controller/                          # Servlets (5 controllers)
+    │   │   │   ├── BaseServlet.java                # Common utilities
+    │   │   │   ├── AuthServlet.java                # /auth/* (login/register)
+    │   │   │   ├── AirportServlet.java             # /airport/* (CRUD)
+    │   │   │   ├── FlightServlet.java              # /flight/* (CRUD)
+    │   │   │   └── BookingServlet.java             # /booking/* (CRUD)
+    │   │   │
+    │   │   └── util/                                # Utilities (4 utils)
+    │   │       ├── PasswordUtil.java               # SHA-256 hashing
+    │   │       ├── ValidationUtil.java             # Input validation
+    │   │       ├── DateUtil.java                   # Date formatting
+    │   │       └── AppConfig.java                  # Config management
+    │   │
+    │   ├── resources/
+    │   │   ├── db.properties                       # Database configuration
+    │   │   ├── messages.properties                 # Application messages
+    │   │   └── logback.xml                         # Logging configuration
+    │   │
+    │   └── webapp/                                  # Frontend
+    │       ├── WEB-INF/
+    │       │   └── web.xml                         # Web app configuration
+    │       │
+    │       ├── index.html                          # Landing page (hero, features)
+    │       ├── login.html                          # Login/Register (tabbed)
+    │       ├── dashboard.html                      # User dashboard (role-based)
+    │       ├── flights.html                        # Flight search & management
+    │       ├── airports.html                       # Airport management
+    │       ├── bookings.html                       # Booking history
+    │       │
+    │       └── assets/
+    │           ├── css/
+    │           │   └── style.css                   # Modern responsive CSS (800+ lines)
+    │           │
+    │           ├── js/
+    │           │   ├── main.js                     # Common utilities, auth
+    │           │   ├── flights.js                  # Flight operations
+    │           │   └── airports.js                 # Airport operations
+    │           │
+    │           └── images/                         # Images directory
+    │
+    └── test/
+        └── java/com/example/airportmanagement/
+            ├── dao/
+            │   └── UserDAOTest.java                # DAO unit tests
+            └── service/
+                └── UserServiceTest.java            # Service unit tests
+
+STATISTICS:
+-----------
+✓ 25 Java classes
+✓ 6 HTML pages
+✓ 3 JavaScript files
+✓ 1 CSS file (800+ lines)
+✓ 2 SQL scripts
+✓ 2 Test classes
+✓ 15+ API endpoints
+✓ 4 Database tables
+✓ ~5,000+ lines of code
+
+FEATURES:
+---------
+✓ User Management (Register, Login, Role-based Access)
+✓ Airport Management (CRUD operations)
+✓ Flight Management (Scheduling, Search, Cancel)
+✓ Booking Management (Book, Cancel, History)
+✓ RESTful API with JSON
+✓ Connection Pooling
+✓ Password Hashing (SHA-256 + Salt)
+✓ Input Validation
+✓ Exception Handling
+✓ Logging (SLF4J + Logback)
+✓ Responsive UI
+✓ AJAX Dynamic Updates
+✓ Session Management
+✓ Sample Data Included
+
+READY TO DEPLOY!
