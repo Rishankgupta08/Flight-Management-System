@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airports - Airport Management System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>✈️ Airport Management System</h1>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="flights.html">Flights</a></li>
+                <li><a href="airports.html" class="active">Airports</a></li>
+                <li id="navBookings" style="display: none;"><a href="bookings.html">My Bookings</a></li>
+                <li id="navDashboard" style="display: none;"><a href="dashboard.html">Dashboard</a></li>
+                <li id="navLogin"><a href="login.html">Login</a></li>
+                <li id="navLogout" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <h1>Airport Management</h1>
+
+            <!-- Search Form -->
+            <div class="card">
+                <h2>Search Airports</h2>
+                <form id="searchForm" class="search-form" onsubmit="searchAirports(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="searchQuery" name="q" 
+                                   placeholder="Search by name, code, city, or country...">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="button" class="btn btn-secondary" onclick="loadAllAirports()">Show All</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Add Airport Button (Admin only) -->
+            <div id="addAirportSection" style="display: none;">
+                <button class="btn btn-success" onclick="showAddAirportModal()">+ Add New Airport</button>
+            </div>
+
+            <!-- Airports List -->
+            <div id="airportsList" class="airports-grid">
+                <p class="loading">Loading airports...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Airport Modal -->
+    <div id="airportModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAirportModal()">&times;</span>
+            <h2 id="modalTitle">Add New Airport</h2>
+            <form id="airportForm" onsubmit="handleAirportSubmit(event)">
+                <input type="hidden" id="airportId" name="id">
+                <div class="form-group">
+                    <label for="airportName">Airport Name</label>
+                    <input type="text" id="airportName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="airportCode">Airport Code (IATA)</label>
+                    <input type="text" id="airportCode" name="code" 
+                           pattern="[A-Z]{3}" maxlength="3" placeholder="e.g., JFK" required>
+                </div>
+                <div class="form-group">
+                    <label for="airportCity">City</label>
+                    <input type="text" id="airportCity" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="airportCountry">Country</label>
+                    <input type="text" id="airportCountry" name="country" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Save Airport</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAirportModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Airport Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/airports.js"></script>
+</body>
+</html>
