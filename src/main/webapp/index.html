@@ -3,101 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airport Management System - Home</title>
+    <title>Airport Management System - Professional Aviation Platform</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <h1>✈️ Airport Management System</h1>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-airplane-engines"></i> AMS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html"><i class="bi bi-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="flights.html"><i class="bi bi-airplane"></i> Flights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="airports.html"><i class="bi bi-building"></i> Airports</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="navAuth">
+                    <li class="nav-item" id="navBookings" style="display: none;">
+                        <a class="nav-link" href="bookings.html"><i class="bi bi-ticket"></i> My Bookings</a>
+                    </li>
+                    <li class="nav-item" id="navDashboard" style="display: none;">
+                        <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item" id="navLogin">
+                        <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                    </li>
+                    <li class="nav-item dropdown" id="navUser" style="display: none;">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> <span id="navUsername"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" id="darkModeToggle" title="Toggle Dark Mode">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                    </li>
+                </ul>
             </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="flights.html">Flights</a></li>
-                <li><a href="airports.html">Airports</a></li>
-                <li id="navBookings" style="display: none;"><a href="bookings.html">My Bookings</a></li>
-                <li id="navDashboard" style="display: none;"><a href="dashboard.html">Dashboard</a></li>
-                <li id="navLogin"><a href="login.html">Login</a></li>
-                <li id="navLogout" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
-            </ul>
         </div>
     </nav>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Welcome to Airport Management System</h1>
-                <p>Your comprehensive solution for airport operations, flight management, and bookings</p>
-                <div class="hero-buttons">
-                    <a href="flights.html" class="btn btn-primary">Search Flights</a>
-                    <a href="login.html" class="btn btn-secondary">Get Started</a>
+    <!-- Hero Section -->
+    <section class="hero-section bg-gradient text-white py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-3 fw-bold mb-4">
+                        <i class="bi bi-airplane-engines"></i> Airport Management System
+                    </h1>
+                    <p class="lead mb-4">
+                        Your comprehensive solution for modern airport operations, flight management, 
+                        and seamless booking experiences powered by cutting-edge technology.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="flights.html" class="btn btn-light btn-lg">
+                            <i class="bi bi-search"></i> Search Flights
+                        </a>
+                        <a href="login.html" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-box-arrow-in-right"></i> Get Started
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="features">
-            <div class="container">
-                <h2>Our Features</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🛫</div>
-                        <h3>Flight Management</h3>
-                        <p>Schedule, update, and manage flights with real-time status updates</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🏢</div>
-                        <h3>Airport Management</h3>
-                        <p>Comprehensive airport information and management capabilities</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎫</div>
-                        <h3>Easy Booking</h3>
-                        <p>Book flights quickly and manage your bookings effortlessly</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">👥</div>
-                        <h3>User Management</h3>
-                        <p>Role-based access control for administrators, staff, and passengers</p>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="hero-image">
+                        <i class="bi bi-airplane display-1 text-white opacity-25"></i>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="stats">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3 id="statsAirports">0</h3>
-                        <p>Airports</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="statsFlights">0</h3>
-                        <p>Active Flights</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="statsBookings">0</h3>
-                        <p>Bookings Today</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
+    <!-- Features Section -->
+    <section class="py-5">
         <div class="container">
-            <p>&copy; 2025 Airport Management System. All rights reserved.</p>
+            <h2 class="text-center mb-5 fw-bold">Our Features</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100 text-center border-0 shadow-sm hover-lift">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="bi bi-airplane-engines text-primary" style="font-size: 3rem;"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">Flight Management</h5>
+                            <p class="card-text text-muted">
+                                Schedule, update, and manage flights with real-time status updates and seat availability tracking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100 text-center border-0 shadow-sm hover-lift">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="bi bi-building text-success" style="font-size: 3rem;"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">Airport Management</h5>
+                            <p class="card-text text-muted">
+                                Comprehensive airport information and management capabilities with search and filtering.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100 text-center border-0 shadow-sm hover-lift">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="bi bi-ticket-perforated text-info" style="font-size: 3rem;"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">Easy Booking</h5>
+                            <p class="card-text text-muted">
+                                Book flights quickly and manage your bookings effortlessly with instant confirmations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100 text-center border-0 shadow-sm hover-lift">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="bi bi-shield-check text-warning" style="font-size: 3rem;"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">Secure & Reliable</h5>
+                            <p class="card-text text-muted">
+                                Role-based access control with encrypted passwords and secure session management.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-building text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-1" id="statsAirports">
+                            <span class="spinner-border spinner-border-sm" role="status"></span>
+                        </h2>
+                        <p class="text-muted mb-0">Global Airports</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-airplane text-success" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-1" id="statsFlights">
+                            <span class="spinner-border spinner-border-sm" role="status"></span>
+                        </h2>
+                        <p class="text-muted mb-0">Active Flights</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-people text-info" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-1">24/7</h2>
+                        <p class="text-muted mb-0">Customer Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-3">Ready to Get Started?</h2>
+            <p class="lead mb-4">Join thousands of satisfied travelers and manage your flights efficiently.</p>
+            <a href="login.html" class="btn btn-light btn-lg">
+                <i class="bi bi-box-arrow-in-right"></i> Sign Up Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Airport Management System. All rights reserved.</p>
+            <p class="text-muted small">Built with <i class="bi bi-heart-fill text-danger"></i> using Java, MySQL, and Bootstrap</p>
         </div>
     </footer>
 
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
     <script>
-        // Update navigation based on login status
+        // Update navigation
         updateNavigation();
         
         // Load statistics
-        loadStats();
-        
         async function loadStats() {
             try {
                 const [airportsRes, flightsRes] = await Promise.all([
@@ -106,22 +230,41 @@
                 ]);
                 
                 if (airportsRes.ok) {
-                    const airportsData = await airportsRes.json();
-                    if (airportsData.success) {
-                        document.getElementById('statsAirports').textContent = airportsData.data.length;
+                    const data = await airportsRes.json();
+                    if (data.success) {
+                        animateCounter('statsAirports', data.data.length);
                     }
                 }
                 
                 if (flightsRes.ok) {
-                    const flightsData = await flightsRes.json();
-                    if (flightsData.success) {
-                        document.getElementById('statsFlights').textContent = flightsData.data.length;
+                    const data = await flightsRes.json();
+                    if (data.success) {
+                        animateCounter('statsFlights', data.data.length);
                     }
                 }
             } catch (error) {
                 console.error('Error loading stats:', error);
+                document.getElementById('statsAirports').textContent = '0';
+                document.getElementById('statsFlights').textContent = '0';
             }
         }
+        
+        function animateCounter(elementId, target) {
+            const element = document.getElementById(elementId);
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 30);
+        }
+        
+        loadStats();
     </script>
 </body>
 </html>
